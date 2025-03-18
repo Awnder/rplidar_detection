@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 import threading
 
 # Initialize GPIO for speaker
-SPEAKER_PIN = 18
+SPEAKER_PIN = 2
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(SPEAKER_PIN, GPIO.OUT)
 PWM = GPIO.PWM(SPEAKER_PIN, 3000)  # Set frequency to 3000 Hz
