@@ -4,16 +4,17 @@ import RPi.GPIO as GPIO
 import threading
 
 # Initialize GPIO for speaker
-SPEAKER_PIN = 2
+SPEAKER_PIN = 17
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(SPEAKER_PIN, GPIO.OUT)
 PWM = GPIO.PWM(SPEAKER_PIN, 3000)  # Set frequency to 3000 Hz
 sound_event = threading.Event()
 
-def emit_sound(frequency: int = 3000) -> None:
+def emit_sound(frequency: int = 10000) -> None:
     """Emit sound using GPIO pin for the speaker.
     Args: 
-        frequency (int): Frequency of the sound in Hz.
+        frequency (int): Frequency of the sound in Hz. Minimum is 10 kHz according to 
+        https://www.amazon.com/MEETOOT-Ultrasonic-Speaker-Loudspeaker-Piezoelectric/dp/B09L7LHZML
     """
     try:
         while True:

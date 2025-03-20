@@ -53,7 +53,7 @@ def update() -> tuple:
     Returns:
         tuple: Updated scatter plot object.
     """
-    scan = next(lidar.iter_scans())
+    scan = next(lidar.iter_scans()) # iterator yielding list[quality, angle, distance]
     current_avg_distance = detect_motion(scan)
 
     if hasattr(update, 'prev_avg_distance') and current_avg_distance is not None:
@@ -67,7 +67,7 @@ def update() -> tuple:
 def _update_plot(scan_data: list) -> tuple:
     """Private method to update the scatter plot with new LiDAR scan data.
     Args:
-        scan_data (list): List of tuples containing (angle, distance, quality).
+        scan_data (list): List of tuples containing (quality, angle, distance).
     Returns:
         tuple: Updated scatter plot object.
     """
@@ -81,11 +81,11 @@ def _update_plot(scan_data: list) -> tuple:
 def detect_motion(scan_data: list) -> float:
     """Detect motion based on average distance from LiDAR scan data.
     Args:
-        scan_data (list): List of tuples containing (angle, distance, quality)."
+        scan_data (list): List of tuples containing (quality, angle, distance)."
     Returns:
         float: Average distance from the LiDAR scan data, or None if no valid data.    
     """
-    distances = np.array([d for (_, _, d) in scan_data if d > 0])
+    distances = np.array([distance for (_, _, distance) in scan_data if distance > 0])
     if len(distances) > 0:
         avg_distance = np.mean(distances)
         return avg_distance
