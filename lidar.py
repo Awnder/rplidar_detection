@@ -37,7 +37,9 @@ def emit_sound(frequency: int = 3000) -> None:
     try:
         while True:
             PWM.ChangeFrequency(frequency)  # Set frequency for PWM
-            PWM.start(50)  # Start PWM with 50% duty cycle (volume)
+            # Start PWM with 50% duty cycle 
+            # this is percentage of time signal is "on" 
+            PWM.start(50) # 50% is a square wave
             sound_event.wait()  # Wait for the event to be set/unset (motion detected/ceased)
             PWM.stop()
             sound_event.clear()
@@ -53,14 +55,18 @@ def update() -> tuple:
     Returns:
         tuple: Updated scatter plot object.
     """
+    # gets the next scan and detects motion
     scan = next(lidar.iter_scans()) # iterator yielding list[quality, angle, distance]
     current_avg_distance = detect_motion(scan)
 
+    # Check if the average distance has changed significantly,
+    # if it has, then trigger the sound event
     if hasattr(update, 'prev_avg_distance') and current_avg_distance is not None:
         if abs(current_avg_distance - update.prev_avg_distance) > THRESHOLD_DISTANCE_CHANGE:
             print("Motion Detected!")
             sound_event.set()
 
+    # update the previous average distance attribute
     update.prev_avg_distance = current_avg_distance
     return _update_plot(scan)
 
@@ -71,6 +77,7 @@ def _update_plot(scan_data: list) -> tuple:
     Returns:
         tuple: Updated scatter plot object.
     """
+    # use the angles and distance to calculate x and y coordinates to display on scatterplot
     angles = np.array([np.deg2rad(angle) for (_, angle, _) in scan_data])
     distances = np.array([distance for (_, _, distance) in scan_data])
     x = distances * np.cos(angles)
@@ -86,6 +93,7 @@ def detect_motion(scan_data: list) -> float:
         float: Average distance from the LiDAR scan data, or None if no valid data.    
     """
     distances = np.array([distance for (_, _, distance) in scan_data if distance > 0])
+    # check to see if there are any distances
     if len(distances) > 0:
         avg_distance = np.mean(distances)
         return avg_distance
