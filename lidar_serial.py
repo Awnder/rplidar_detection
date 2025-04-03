@@ -4,7 +4,8 @@ import time
 
 # Replace 'COM_PORT' with your actual COM port
 COM_PORT = '/dev/ttyUSB0'  # For Windows, e.g., 'COM3'; For Linux, e.g., '/dev/ttyUSB0'
-BAUD_RATE = 115200  # Default baud rate for RPLIDAR
+# BAUD_RATE = 115200  # Default baud rate for RPLIDAR
+BAUD_RATE = 460800 # try this one instead - works for sdk
 
 def read_lidar_data():
     print('starting lidar serial connection')
