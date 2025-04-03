@@ -3,4 +3,6 @@ rplidar_arduino-master -> robopeak/rplidar_arduino
 rplidar_sdk-master -> slamtec/rplidar_sdk
 
 
+How to run programs after makefile
 https://www.perplexity.ai/search/how-to-run-simple-grabber-rpli-L047B06cSwm6DJJMgr63GQ
+./simple_grabber --channel --serial /dev/ttyUSB0 460800
