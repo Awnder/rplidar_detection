@@ -1,0 +1,6 @@
+RPLidar_Arduino-main -> DanielKalicki/RPLidar_Arduino
+rplidar_arduino-master -> robopeak/rplidar_arduino
+rplidar_sdk-master -> slamtec/rplidar_sdk
+
+
+https://www.perplexity.ai/search/how-to-run-simple-grabber-rpli-L047B06cSwm6DJJMgr63GQ
