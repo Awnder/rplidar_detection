@@ -7,12 +7,15 @@ COM_PORT = '/dev/ttyUSB0'  # For Windows, e.g., 'COM3'; For Linux, e.g., '/dev/t
 BAUD_RATE = 115200  # Default baud rate for RPLIDAR
 
 def read_lidar_data():
+    print('starting lidar serial connection')
     with serial.Serial(COM_PORT, BAUD_RATE, timeout=1) as ser:
         time.sleep(2)  # Allow time for the connection to establish
+        print('connection est')
         
         while True:
             # Read data from the lidar
             data = ser.read(7)  # Read 7 bytes
+            print(data)
             if len(data) == 7:
                 # Unpack data
                 header, distance, angle, quality = struct.unpack('<BHHB', data)
